@@ -1,0 +1,46 @@
+package com.mycompany.proyectoormjoelcoutolugo.entidades;
+
+import jakarta.persistence.*;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+public class Miembro extends Persona {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_miembro;
+    
+    @OneToMany(mappedBy = "miembro")
+    private Set<Vuelo> vuelos;
+
+    public Miembro(String codigo, String nombre) {
+        super.codigo = codigo;
+        super.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setVuelos(Set<Vuelo> vuelos) {
+        this.vuelos = vuelos;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Set<Vuelo> getVuelos() {
+        return vuelos;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+}

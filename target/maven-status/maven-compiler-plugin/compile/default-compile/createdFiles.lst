@@ -1,0 +1,7 @@
+com\mycompany\proyectoormjoelcoutolugo\entidades\Persona.class
+com\mycompany\proyectoormjoelcoutolugo\entidades\Avion.class
+com\mycompany\proyectoormjoelcoutolugo\entidades\Vuelo.class
+com\mycompany\proyectoormjoelcoutolugo\utils\HibernateUtil.class
+com\mycompany\proyectoormjoelcoutolugo\entidades\Piloto.class
+com\mycompany\proyectoormjoelcoutolugo\entidades\Miembro.class
+com\mycompany\proyectoormjoelcoutolugo\ProyectoORMJoelCoutoLugo.class
