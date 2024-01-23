@@ -9,7 +9,7 @@ public class Vuelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_vuelo;
 
     private String origen;
 
@@ -28,7 +28,7 @@ public class Vuelo {
     @ManyToOne
     @JoinColumn(name = "id_miembro")
     private Miembro miembro;
-    
+
     @OneToOne
     @JoinColumn(name = "id_avion")
     private Avion avion;
@@ -43,7 +43,7 @@ public class Vuelo {
     }
 
     public Long getId() {
-        return id;
+        return id_vuelo;
     }
 
     public String getOrigen() {
@@ -71,7 +71,7 @@ public class Vuelo {
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_vuelo = id;
     }
 
     public void setOrigen(String origen) {
