@@ -4,16 +4,22 @@
  */
 package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 
+import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import com.mycompany.proyectoormjoelcoutolugo.utils.MiembroDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 2damb
  */
 public class EliminarPilotoView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EliminarPilotoView
-     */
+    HibernateUtil hUtil = new HibernateUtil();
+    PilotoDAO pilotoDAO;
+    
     public EliminarPilotoView() {
+        pilotoDAO = new PilotoDAO(hUtil.getSessionFactory());
         initComponents();
     }
 
@@ -28,18 +34,23 @@ public class EliminarPilotoView extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        idPilotoTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Codigo del piloto");
+        jLabel1.setText("ID del piloto");
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idPilotoTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -59,14 +70,11 @@ public class EliminarPilotoView extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(35, 35, 35))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(146, 146, 146)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(idPilotoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -74,7 +82,7 @@ public class EliminarPilotoView extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(idPilotoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -89,6 +97,31 @@ public class EliminarPilotoView extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String id = idPilotoTextField.getText();
+
+        if (!esNumero(id)) {
+            mostrarMensaje("EL ID TIENE QUE SER UN NUMERO");
+        } else {
+            pilotoDAO.eliminarPilotoPorId(Long.parseLong(id));
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+
+    public boolean esNumero(String cadena) {
+        try {
+            // Intenta convertir la cadena a un número
+            Long.parseLong(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            // Si ocurre una excepción, la cadena no es un número
+            return false;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -125,9 +158,9 @@ public class EliminarPilotoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField idPilotoTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

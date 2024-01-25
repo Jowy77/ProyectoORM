@@ -1,19 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 
-/**
- *
- * @author 2damb
- */
+import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import javax.swing.JOptionPane;
+
+
 public class EliminarAvion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EliminarAvion
-     */
+    HibernateUtil hUtil = new HibernateUtil();
+    AvionDAO avionDAO;
+    
     public EliminarAvion() {
+        avionDAO = new AvionDAO(hUtil.getSessionFactory());
         initComponents();
     }
 
@@ -28,7 +27,7 @@ public class EliminarAvion extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        idBorradoTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -37,11 +36,16 @@ public class EliminarAvion extends javax.swing.JFrame {
         jLabel1.setText("Codigo del avion");
 
         jButton1.setText("Eliminar");
-
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        idBorradoTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idBorradoTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idBorradoTextFieldActionPerformed(evt);
             }
         });
 
@@ -69,7 +73,7 @@ public class EliminarAvion extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(idBorradoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,7 +82,7 @@ public class EliminarAvion extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(idBorradoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -89,14 +93,39 @@ public class EliminarAvion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void idBorradoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBorradoTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_idBorradoTextFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String id = idBorradoTextField.getText();
+        
+        if(!esNumero(id)){
+            mostrarMensaje("EL ID TIENE QUE SER UN NUMERO");
+        }else{
+            avionDAO.eliminarAvionPorId(Long.parseLong(id));
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
+    public boolean esNumero(String cadena) {
+        try {
+            // Intenta convertir la cadena a un número
+            Long.parseLong(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            // Si ocurre una excepción, la cadena no es un número
+            return false;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -133,9 +162,9 @@ public class EliminarAvion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField idBorradoTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

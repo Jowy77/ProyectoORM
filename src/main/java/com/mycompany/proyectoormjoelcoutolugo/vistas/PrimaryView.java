@@ -1,19 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.proyectoormjoelcoutolugo.vistas;
 
-/**
- *
- * @author 2damb
- */
-public class PrimaryView extends javax.swing.JFrame {
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Avion;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Miembro;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Piloto;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Vuelo;
+import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import com.mycompany.proyectoormjoelcoutolugo.utils.MiembroDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.VueloDAO;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarAvion;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarMiembroView;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarPilotoView;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarVuelo;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form PrimaryView
-     */
+public class PrimaryView extends javax.swing.JFrame {
+    
+    HibernateUtil hUtil = new HibernateUtil();
+    AvionDAO avionDao;
+    MiembroDAO miembroDao;
+    PilotoDAO pilotoDao;
+    VueloDAO vueloDao;
+    
     public PrimaryView() {
+        avionDao = new AvionDAO(hUtil.getSessionFactory());
+        miembroDao = new MiembroDAO(hUtil.getSessionFactory());
+        pilotoDao = new PilotoDAO(hUtil.getSessionFactory());
+        vueloDao = new VueloDAO(hUtil.getSessionFactory());
         initComponents();
     }
 
@@ -28,7 +45,7 @@ public class PrimaryView extends javax.swing.JFrame {
 
         jMenu6 = new javax.swing.JMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaConsultas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -56,7 +73,7 @@ public class PrimaryView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -67,9 +84,14 @@ public class PrimaryView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaConsultas);
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenuBar1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -82,11 +104,31 @@ public class PrimaryView extends javax.swing.JFrame {
         });
 
         jMenu1.setText("Consultas");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuItem3.setText("Consultar miembros de la tripulacion");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem3MouseClicked(evt);
+            }
+        });
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem2.setText("Consultar pilotos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem4.setText("Consultar vuelos");
@@ -98,6 +140,11 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Consultar aviones");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -126,15 +173,35 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenu5.setText("Eliminar");
 
         jMenuItem9.setText("Eliminar avion");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem9);
 
         jMenuItem10.setText("Eliminar miembro de la tripulacion");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem10);
 
         jMenuItem11.setText("Eliminar piloto");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuItem12.setText("Eliminar vuelo");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem12);
 
         jMenuBar1.add(jMenu5);
@@ -188,12 +255,119 @@ public class PrimaryView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuBar1AncestorAdded
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        List<Vuelo> listaVuelos = vueloDao.obtenerTodos();
+        //"ID", "Número de Vuelo", "Origen", "Destino", "Hora de Salida", "Fecha de Vuelo"
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código_Vuelo");
+        tableModel.addColumn("Origen");
+        tableModel.addColumn("Destino");
+        tableModel.addColumn("Hora_Salida");
+        tableModel.addColumn("Fecha_vuelo");
+        
+        listaVuelos.forEach(e -> {
+            tableModel.addRow(new Object[]{e.getId_vuelo(), e.getNumeroDeVuelo(), e.getOrigen(), e.getDestino(), e.getHoraSalida(), e.getHoraSalida(), e.getFechaVuelo()});
+        });
+        
+        tablaConsultas.setModel(tableModel);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseClicked
+
+    }//GEN-LAST:event_jMenuItem3MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        //CONSULTAR MIEMBROS
+        List<Miembro> listaMiembros = miembroDao.obtenerTodos();
+
+        //super(new Object[]{"ID", "Código", "Nombre"}, 0);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Nombre_Piloto");
+        
+        for (Miembro miembro : listaMiembros) {
+            tableModel.addRow(new Object[]{miembro.getId_miembro(), miembro.getCodigo(), miembro.getNombre()});
+        }
+        
+        tablaConsultas.setModel(tableModel);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        List<Avion> listaAviones = avionDao.obtenerTodos();
+        
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Tipo");
+        
+        for (Avion avion : listaAviones) {
+            tableModel.addRow(new Object[]{avion.getId_avion(), avion.getCodigo(), avion.getTipo()});
+        }
+        
+        tablaConsultas.setModel(tableModel);
+
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        List<Piloto> listaPilotos = pilotoDao.obtenerTodos();
+        //"ID", "Código", "Nombre", "Horas de Vuelo"
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Nombre_Piloto");
+        tableModel.addColumn("Horas_De_Vuelo");
+        
+        listaPilotos.forEach(e -> {
+            tableModel.addRow(new Object[]{e.getId_piloto(), e.getCodigo(), e.getNombre(), e.getHorasDeVuelo()});
+        });
+        
+        tablaConsultas.setModel(tableModel);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        EliminarAvion borradoAvionView = new EliminarAvion();
+        borradoAvionView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        //ELMINAR MIEMBRO
+        
+        EliminarMiembroView eliminarMiembroView = new EliminarMiembroView();
+        eliminarMiembroView.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        //ELIMINAR PILOTO
+        
+        EliminarPilotoView eliminarPilotoView = new EliminarPilotoView();
+        eliminarPilotoView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        EliminarVuelo elimirnarVueloView = new EliminarVuelo();
+        elimirnarVueloView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
 
     /**
      * @param args the command line arguments
@@ -255,6 +429,6 @@ public class PrimaryView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaConsultas;
     // End of variables declaration//GEN-END:variables
 }

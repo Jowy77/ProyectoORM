@@ -1,5 +1,6 @@
 package com.mycompany.proyectoormjoelcoutolugo.entidades;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +20,21 @@ public class Avion {
     private String codigo;
 
     private String tipo;
-    
-    @OneToOne(mappedBy = "avion")
+
+    @OneToOne(mappedBy = "avion", cascade = CascadeType.ALL, orphanRemoval = true)
     private Vuelo vuelo;
+
+    public Avion() {
+
+    }
+
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
 
     public Avion(String tipo) {
         this.tipo = tipo;
@@ -49,6 +62,11 @@ public class Avion {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Avion{id_avion=" + id_avion + ", codigo='" + codigo + "', tipo='" + tipo + "'}";
     }
 
 }

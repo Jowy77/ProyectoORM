@@ -1,5 +1,6 @@
 package com.mycompany.proyectoormjoelcoutolugo.entidades;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,8 +21,11 @@ public class Piloto extends Persona {
     @Column(name = "hora_de_vuelo")
     private int horasDeVuelo;
 
-    @OneToMany(mappedBy = "piloto")
+    @OneToMany(mappedBy = "piloto",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vuelo> vuelos;
+
+    public Piloto() {
+    }
 
     public Piloto(String codigo, String nombre, int horasDeVuelo) {
         super.codigo = codigo;

@@ -21,17 +21,20 @@ public class Vuelo {
 
     private String horaSalida;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_piloto")
     private Piloto piloto;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_miembro")
     private Miembro miembro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_avion")
     private Avion avion;
+
+    public Vuelo() {
+    }
 
     public Vuelo(String origen, String destino, String numeroDeVuelo, Date fecha, String horaSalida, Avion avion) {
         this.origen = origen;
@@ -88,6 +91,10 @@ public class Vuelo {
 
     public void setFecha(Date fecha) {
         this.fechaVuelo = fecha;
+    }
+
+    public Long getId_vuelo() {
+        return id_vuelo;
     }
 
     public void setHoraSalida(String horaSalida) {

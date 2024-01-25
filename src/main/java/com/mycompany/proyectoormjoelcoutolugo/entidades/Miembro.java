@@ -6,17 +6,24 @@ import java.util.Set;
 
 @Entity
 public class Miembro extends Persona {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_miembro;
-    
-    @OneToMany(mappedBy = "miembro")
+
+    @OneToMany(mappedBy = "miembro", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vuelo> vuelos;
+
+    public Miembro() {
+    }
 
     public Miembro(String codigo, String nombre) {
         super.codigo = codigo;
         super.nombre = nombre;
+    }
+
+    public Long getId_miembro() {
+        return id_miembro;
     }
 
     public String getNombre() {
