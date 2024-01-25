@@ -28,6 +28,13 @@ public class Avion {
 
     }
 
+    public Avion(String codigo, String tipo) {
+        this.codigo = codigo;
+        this.tipo = tipo;
+    }
+    
+    
+
     public Vuelo getVuelo() {
         return vuelo;
     }

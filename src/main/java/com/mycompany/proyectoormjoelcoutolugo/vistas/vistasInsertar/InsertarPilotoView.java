@@ -4,17 +4,26 @@
  */
 package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar;
 
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Piloto;
+import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 2damb
  */
 public class InsertarPilotoView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InsertarPilotoView
-     */
+    HibernateUtil hUtil = new HibernateUtil();
+    PilotoDAO pilotoDAO;
+
     public InsertarPilotoView() {
         initComponents();
+        pilotoDAO = new PilotoDAO(hUtil.getSessionFactory());
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
     /**
@@ -31,9 +40,9 @@ public class InsertarPilotoView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        codigoPilotoTextField = new javax.swing.JTextField();
+        nombrePilotoTextField = new javax.swing.JTextField();
+        horasVueloTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,7 +52,12 @@ public class InsertarPilotoView extends javax.swing.JFrame {
 
         jLabel3.setText("Horas de vuelo");
 
-        jButton1.setText("Aceptar");
+        jButton1.setText("Insertar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -52,9 +66,9 @@ public class InsertarPilotoView extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        horasVueloTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                horasVueloTextFieldActionPerformed(evt);
             }
         });
 
@@ -73,9 +87,9 @@ public class InsertarPilotoView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
+                                .addComponent(codigoPilotoTextField)
+                                .addComponent(nombrePilotoTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                            .addComponent(horasVueloTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
@@ -89,15 +103,15 @@ public class InsertarPilotoView extends javax.swing.JFrame {
                 .addContainerGap(69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(codigoPilotoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombrePilotoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(horasVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -108,13 +122,50 @@ public class InsertarPilotoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void horasVueloTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horasVueloTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_horasVueloTextFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String codigo = codigoPilotoTextField.getText();
+        String nombre = nombrePilotoTextField.getText();
+        String horasVuelo = horasVueloTextField.getText();
+
+        if (!esNumero(horasVuelo)) {
+            mostrarMensaje("LAS HORAS DE VUELO TIENEN QUE SER UN NUMERO");
+        } else if(!esNoNuloNoVacio(codigo)){
+            mostrarMensaje("TIENES QUE INTRODUCIR UN CODIGO");
+        }else if(!esNoNuloNoVacio(nombre)){
+            mostrarMensaje("EL PILOTO TIENE QUE TENER UN NOMBRE");
+        }else{
+            Piloto piotoNuevo = new Piloto(codigo, nombre, Integer.parseInt(horasVuelo));
+            
+            pilotoDAO.insertarPiloto(piotoNuevo);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+
+    public static boolean esNoNuloNoVacio(String cadena) {
+        return cadena != null && !cadena.isEmpty();
+    }
+
+    public boolean esNumero(String cadena) {
+        try {
+            // Intenta convertir la cadena a un número
+            Long.parseLong(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            // Si ocurre una excepción, la cadena no es un número
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -152,13 +203,13 @@ public class InsertarPilotoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField codigoPilotoTextField;
+    private javax.swing.JTextField horasVueloTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField nombrePilotoTextField;
     // End of variables declaration//GEN-END:variables
 }

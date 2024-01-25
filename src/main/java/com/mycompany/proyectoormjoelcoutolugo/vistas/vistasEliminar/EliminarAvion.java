@@ -3,6 +3,7 @@ package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 
 import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
 import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
@@ -14,6 +15,7 @@ public class EliminarAvion extends javax.swing.JFrame {
     public EliminarAvion() {
         avionDAO = new AvionDAO(hUtil.getSessionFactory());
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**

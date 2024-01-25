@@ -26,6 +26,18 @@ public class MiembroDAO {
             return query.list();
         }
     }
+    
+    // Método para obtener una lista de IDs de miembros usando HQL
+    public List<Long> obtenerIdsMiembros() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener los IDs de los miembros
+            String hql = "SELECT id_miembro FROM Miembro";
+            return session.createQuery(hql, Long.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void eliminarMiembroPorId(Long idMiembro) {
         try (Session session = sessionFactory.openSession()) {
@@ -48,6 +60,28 @@ public class MiembroDAO {
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
+                }
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void insertarMiembro(Miembro miembro) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                // Guardar el miembro en la base de datos
+                session.persist(miembro);
+
+                transaction.commit();
+                mostrarMensaje("Miembro insertado correctamente con ID: " + miembro.getId_miembro());
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                    mostrarMensaje("LA TRANSACCION NO SE HA PODIDO COMPLETAR");
                 }
                 e.printStackTrace();
             }

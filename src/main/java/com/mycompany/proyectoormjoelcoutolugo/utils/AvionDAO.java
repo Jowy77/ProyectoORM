@@ -29,7 +29,18 @@ public class AvionDAO {
         }
     }
     
-      public void eliminarAvionPorId(Long idAvion) {
+    public List<Long> obtenerIdsAviones() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener los IDs de los aviones
+            String hql = "SELECT id_avion FROM Avion";
+            return session.createQuery(hql, Long.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void eliminarAvionPorId(Long idAvion) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
 
@@ -55,8 +66,30 @@ public class AvionDAO {
             }
         }
     }
-      
-      private void mostrarMensaje(String mensaje) {
+
+    public void insertarAvion(Avion avion) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                // Guardar el avión en la base de datos
+                session.persist(avion);
+
+                transaction.commit();
+                mostrarMensaje("Avión insertado correctamente con ID: " + avion.getId_avion());
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                    mostrarMensaje("SE HA CANCELADO LA TRANSACCION");
+                }
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);
     }
 }

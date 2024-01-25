@@ -13,6 +13,10 @@ import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarAvio
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarMiembroView;
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarPilotoView;
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar.EliminarVuelo;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarAvionView;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarMiembroView;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarPilotoView;
+import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarVueloView;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -160,12 +164,27 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenu4.add(jMenuItem1);
 
         jMenuItem6.setText("Insertar miembro de tripulacion");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem6);
 
         jMenuItem7.setText("Insertar vuelo");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenuItem8.setText("Insertar avion");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem8);
 
         jMenuBar1.add(jMenu4);
@@ -274,7 +293,9 @@ public class PrimaryView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        //INSERTAR PILOTO
+        InsertarPilotoView insertarPilotoView = new InsertarPilotoView();
+        insertarPilotoView.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -364,6 +385,25 @@ public class PrimaryView extends javax.swing.JFrame {
         EliminarVuelo elimirnarVueloView = new EliminarVuelo();
         elimirnarVueloView.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        //INSERTAR MIEMBRO
+        InsertarMiembroView insertarMiembroView = new InsertarMiembroView();
+        insertarMiembroView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        //INSERTAR VUELO
+        InsertarVueloView insertarVueloView = new InsertarVueloView();
+        insertarVueloView.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        //INSERTAR AVION
+        InsertarAvionView insertarAvionView = new InsertarAvionView();
+        insertarAvionView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);

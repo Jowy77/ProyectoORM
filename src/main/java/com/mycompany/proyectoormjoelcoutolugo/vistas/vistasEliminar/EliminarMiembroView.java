@@ -3,6 +3,7 @@ package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
 import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
 import com.mycompany.proyectoormjoelcoutolugo.utils.MiembroDAO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class EliminarMiembroView extends javax.swing.JFrame {
@@ -13,6 +14,8 @@ public class EliminarMiembroView extends javax.swing.JFrame {
     public EliminarMiembroView() {
         miembroDAO = new MiembroDAO(hUtil.getSessionFactory());
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
     /**

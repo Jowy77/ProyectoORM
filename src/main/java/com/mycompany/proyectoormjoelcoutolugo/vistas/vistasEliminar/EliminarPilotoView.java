@@ -7,6 +7,7 @@ package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
 import com.mycompany.proyectoormjoelcoutolugo.utils.MiembroDAO;
 import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,10 +18,12 @@ public class EliminarPilotoView extends javax.swing.JFrame {
 
     HibernateUtil hUtil = new HibernateUtil();
     PilotoDAO pilotoDAO;
-    
+
     public EliminarPilotoView() {
         pilotoDAO = new PilotoDAO(hUtil.getSessionFactory());
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }
 
     /**
@@ -121,7 +124,7 @@ public class EliminarPilotoView extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

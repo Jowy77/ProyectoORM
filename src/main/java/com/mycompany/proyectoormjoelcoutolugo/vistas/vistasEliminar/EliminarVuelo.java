@@ -3,6 +3,7 @@ package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasEliminar;
 import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
 import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
 import com.mycompany.proyectoormjoelcoutolugo.utils.VueloDAO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class EliminarVuelo extends javax.swing.JFrame {
@@ -13,9 +14,10 @@ public class EliminarVuelo extends javax.swing.JFrame {
     public EliminarVuelo() {
         vueloDAO = new VueloDAO(hUtil.getSessionFactory());
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,15 +97,15 @@ public class EliminarVuelo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         String id = idVueloTextField.getText();
 
         if (!esNumero(id)) {
             mostrarMensaje("EL ID TIENE QUE SER UN NUMERO");
         } else {
-           vueloDAO.eliminarVueloPorId(Long.parseLong(id));
+            vueloDAO.eliminarVueloPorId(Long.parseLong(id));
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void mostrarMensaje(String mensaje) {
@@ -120,7 +122,7 @@ public class EliminarVuelo extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

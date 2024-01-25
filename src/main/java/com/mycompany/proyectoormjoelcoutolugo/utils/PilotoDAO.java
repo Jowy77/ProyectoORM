@@ -28,6 +28,17 @@ public class PilotoDAO {
         }
     }
     
+    public List<Long> obtenerIdsPilotos() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener los IDs de los pilotos
+            String hql = "SELECT id_piloto FROM Piloto";
+            return session.createQuery(hql, Long.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public void eliminarPilotoPorId(Long idPiloto) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
@@ -49,6 +60,28 @@ public class PilotoDAO {
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
+                }
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void insertarPiloto(Piloto piloto) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                // Guardar el piloto en la base de datos
+                session.persist(piloto);
+
+                transaction.commit();
+                mostrarMensaje("Piloto insertado correctamente con ID: " + piloto.getId_piloto());
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                    mostrarMensaje("LA TRANSACCION NO HA PODIDO COMPLETARSE");
                 }
                 e.printStackTrace();
             }
