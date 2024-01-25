@@ -11,7 +11,7 @@ public class Miembro extends Persona {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_miembro;
 
-    @OneToMany(mappedBy = "miembro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "miembro", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Vuelo> vuelos;
 
     public Miembro() {

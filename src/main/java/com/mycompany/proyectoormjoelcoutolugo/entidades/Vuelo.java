@@ -21,15 +21,15 @@ public class Vuelo {
 
     private String horaSalida;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_piloto")
     private Piloto piloto;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_miembro")
     private Miembro miembro;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_avion")
     private Avion avion;
 

@@ -21,7 +21,7 @@ public class Piloto extends Persona {
     @Column(name = "hora_de_vuelo")
     private int horasDeVuelo;
 
-    @OneToMany(mappedBy = "piloto",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "piloto",cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Vuelo> vuelos;
 
     public Piloto() {
