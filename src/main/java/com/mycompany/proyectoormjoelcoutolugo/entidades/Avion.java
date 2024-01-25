@@ -21,7 +21,7 @@ public class Avion {
 
     private String tipo;
 
-    @OneToOne(mappedBy = "avion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "avion", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Vuelo vuelo;
 
     public Avion() {
