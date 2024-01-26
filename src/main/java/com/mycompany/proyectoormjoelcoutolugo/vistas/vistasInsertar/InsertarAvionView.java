@@ -5,19 +5,22 @@
 package com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar;
 
 import com.mycompany.proyectoormjoelcoutolugo.entidades.Avion;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Piloto;
 import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
 import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import static com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarPilotoView.esNoNuloNoVacio;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 2damb
  */
 public class InsertarAvionView extends javax.swing.JFrame {
-    
+
     HibernateUtil hUtil = new HibernateUtil();
     AvionDAO avionDAO;
-    
+
     public InsertarAvionView() {
         initComponents();
         avionDAO = new AvionDAO(hUtil.getSessionFactory());
@@ -118,11 +121,31 @@ public class InsertarAvionView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Avion avionNuevo = new Avion(codigoTextField.getText(), tipoDeAvionTextField.getText());
-        
-        avionDAO.insertarAvion(avionNuevo);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String codigoAvion = codigoTextField.getText();
+        String tipoDeAvion = tipoDeAvionTextField.getText();
 
+        if (!esNoNuloNoVacio(codigoAvion)) {
+            mostrarMensaje("TIENES QUE INTRODUCIR UN CODIGO");
+        } else if (!esNoNuloNoVacio(tipoDeAvion)) {
+            mostrarMensaje("EL AVION TIENE QUE TENER UN TIPO");
+        } else {
+            Avion avionNuevo = new Avion(codigoAvion, tipoDeAvion);
+
+            avionDAO.insertarAvion(avionNuevo);
+            this.setVisible(false);
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public static boolean esNoNuloNoVacio(String cadena) {
+        return cadena != null && !cadena.isEmpty();
+    }
+    
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
     /**
      * @param args the command line arguments
      */

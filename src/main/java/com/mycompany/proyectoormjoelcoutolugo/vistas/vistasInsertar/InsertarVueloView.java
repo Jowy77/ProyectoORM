@@ -84,7 +84,7 @@ public class InsertarVueloView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Codigo de Vuelo");
+        jLabel1.setText("Numero de Vuelo");
 
         jLabel2.setText("Fecha del vuelo");
 
@@ -133,14 +133,14 @@ public class InsertarVueloView extends javax.swing.JFrame {
         jLabel8.setText("Destino");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setText("VUELOS");
+        jLabel9.setText("INSERTAR VUELO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -174,16 +174,16 @@ public class InsertarVueloView extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
-                .addGap(189, 189, 189)
+                .addGap(140, 140, 140)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(codigoVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,6 +277,8 @@ public class InsertarVueloView extends javax.swing.JFrame {
             vueloNuevo.setAvion(avionVuelo);
 
             vueloDAO.insertarVuelo(vueloNuevo);
+            mostrarMensaje("VUELO INSERTADO CON EXITO");
+            this.setVisible(false);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

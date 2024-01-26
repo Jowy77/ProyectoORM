@@ -58,7 +58,7 @@ public class ActualizarAvionView extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Codigo del avion");
+        jLabel3.setText("Numero de vuelo");
 
         codigoTextField.setEnabled(false);
 

@@ -1,20 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.proyectoormjoelcoutolugo.vistasActualizar;
 
-/**
- *
- * @author Iproy
- */
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Miembro;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Piloto;
+import com.mycompany.proyectoormjoelcoutolugo.entidades.Vuelo;
+import com.mycompany.proyectoormjoelcoutolugo.utils.AvionDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.HibernateUtil;
+import com.mycompany.proyectoormjoelcoutolugo.utils.MiembroDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.PilotoDAO;
+import com.mycompany.proyectoormjoelcoutolugo.utils.VueloDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class ActualizarVueloView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ActualizarVueloView
-     */
+    HibernateUtil hUtil = new HibernateUtil();
+    VueloDAO vueloDAO;
+    AvionDAO avionDAO;
+    PilotoDAO pilotoDAO;
+    MiembroDAO miembroDAO;
+    Vuelo vueloActualizar;
+
     public ActualizarVueloView() {
         initComponents();
+        vueloDAO = new VueloDAO(hUtil.getSessionFactory());
+        avionDAO = new AvionDAO(hUtil.getSessionFactory());
+        pilotoDAO = new PilotoDAO(hUtil.getSessionFactory());
+        miembroDAO = new MiembroDAO(hUtil.getSessionFactory());
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        List<Long> listaIdPilotos = pilotoDAO.obtenerIdsPilotos();
+
+        listaIdPilotos.forEach(piloto -> {
+            pilotoComboBox.addItem(piloto.toString());
+        });
+        //---------------------------------------------------------
+        List<Long> listaIdMiembros = miembroDAO.obtenerIdsMiembros();
+
+        listaIdMiembros.forEach(miembro -> {
+            miembroComboBox.addItem(miembro.toString());
+        });
     }
 
     /**
@@ -26,22 +56,283 @@ public class ActualizarVueloView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        idVueloTextField = new javax.swing.JTextField();
+        buscarVueloButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        numeroVueloTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        fechaTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        origenTextField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        destinoTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        horaTextField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        actualizarButton = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        pilotoComboBox = new javax.swing.JComboBox<>();
+        miembroComboBox = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("ACTUALIZAR VUELO");
+
+        jLabel2.setText("ID del avion");
+
+        idVueloTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        buscarVueloButton.setText("Buscar Vuelo");
+        buscarVueloButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarVueloButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Numero de vuelo");
+
+        numeroVueloTextField.setEnabled(false);
+
+        jLabel4.setText("Fecha vuelo");
+
+        fechaTextField.setEnabled(false);
+
+        jLabel5.setText("Origen");
+
+        origenTextField.setEnabled(false);
+
+        jLabel6.setText("Destino");
+
+        destinoTextField.setEnabled(false);
+
+        jLabel7.setText("Hora de salida");
+
+        horaTextField.setEnabled(false);
+
+        jLabel8.setText("Piloto del vuelo");
+
+        actualizarButton.setText("Actualizar");
+        actualizarButton.setEnabled(false);
+        actualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Miembro del vuelo");
+
+        pilotoComboBox.setEnabled(false);
+
+        miembroComboBox.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(83, 83, 83))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(actualizarButton)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(numeroVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fechaTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(origenTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(destinoTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(horaTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(pilotoComboBox, 0, 100, Short.MAX_VALUE)
+                                    .addComponent(miembroComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(65, 65, 65))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(idVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buscarVueloButton)
+                .addGap(0, 65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(idVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarVueloButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(numeroVueloTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(fechaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(origenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(destinoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(horaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(pilotoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(miembroComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(actualizarButton)
+                .addGap(28, 28, 28))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buscarVueloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarVueloButtonActionPerformed
+        String idVueloActualizar = idVueloTextField.getText();
+
+        if (!esNoNuloNoVacio(idVueloActualizar)) {
+            mostrarMensaje("EL ID NO PUEDE ESTAR VACIO");
+        } else if (!esNumero(idVueloActualizar)) {
+            mostrarMensaje("EL ID NO PUEDE TENER LETRAS");
+        } else {
+
+             vueloActualizar = vueloDAO.obtenerVueloPorId(Long.parseLong(idVueloActualizar));
+
+            if (vueloActualizar == null) {
+                mostrarMensaje("NO SE HA ECONTRADO NINGUN VUELO CON ESE ID");
+            } else {
+                numeroVueloTextField.setEnabled(true);
+                fechaTextField.setEnabled(true);
+                origenTextField.setEnabled(true);
+                destinoTextField.setEnabled(true);
+                horaTextField.setEnabled(true);
+                actualizarButton.setEnabled(true);
+                
+                pilotoComboBox.setEnabled(true);
+                miembroComboBox.setEnabled(true);
+                buscarVueloButton.setEnabled(false);
+                
+                numeroVueloTextField.setText(vueloActualizar.getNumeroDeVuelo());
+                fechaTextField.setText(vueloActualizar.getFechaVuelo());
+                origenTextField.setText(vueloActualizar.getOrigen());
+                destinoTextField.setText(vueloActualizar.getDestino());
+                horaTextField.setText(vueloActualizar.getHoraSalida());
+            }
+
+        }
+    }//GEN-LAST:event_buscarVueloButtonActionPerformed
+
+    private void actualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarButtonActionPerformed
+        //ACTUALIZAR
+        String numeroVuelo = numeroVueloTextField.getText();
+        String fechaVuelo = fechaTextField.getText();
+        String origenVuelo = origenTextField.getText();
+        String destinoVuelo = destinoTextField.getText();
+        String horaVuelo = horaTextField.getText();
+        Piloto pilotoVuelo = pilotoDAO.obtenerPilotoPorId(Long.parseLong(pilotoComboBox.getSelectedItem().toString()));
+        Miembro miembroVuelo = miembroDAO.obtenerMiembroPorId(Long.parseLong(miembroComboBox.getSelectedItem().toString()));
+        
+        
+        if(!esNoNuloNoVacio(numeroVuelo)){
+            mostrarMensaje("EL NUMERO DE VUELO NO PUDE ESTAR VACIO");
+        }else if(!esNoNuloNoVacio(origenVuelo)){
+            mostrarMensaje("EL ORIGEN NO PUEDE ESTAR VACIO");
+        }else if(!esNoNuloNoVacio(destinoVuelo)){
+            mostrarMensaje("EL DESTINO NO PUEDE ESTAR VACIO");
+        }else if(!esNoNuloNoVacio(fechaVuelo)){
+            mostrarMensaje("LA FECHA NO PUEDE ESTAR VACIA");
+        }else if(!tieneFormatoFecha(fechaVuelo)){
+            mostrarMensaje("LA FECHA NO TIENE EL FORMATO CORRCTO (DD/MM/YYYY)");
+        }else if(!tieneFormatoReloj(horaVuelo)){
+            mostrarMensaje("LA HORA NO TIENE EL FORMATO CORRECTO (00:00)");
+        }else{
+            vueloActualizar.setOrigen(origenVuelo);
+            vueloActualizar.setDestino(destinoVuelo);
+            vueloActualizar.setNumeroDeVuelo(numeroVuelo);
+            vueloActualizar.setFecha(fechaVuelo);
+            vueloActualizar.setHoraSalida(horaVuelo);
+            vueloActualizar.setPiloto(pilotoVuelo);
+            vueloActualizar.setMiembro(miembroVuelo);
+            
+            vueloDAO.actualizarVuelo(vueloActualizar);
+            mostrarMensaje("VUELO ACTUALIZADO CON EXITO");
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_actualizarButtonActionPerformed
+
+    public boolean esNumero(String cadena) {
+        try {
+            // Intenta convertir la cadena a un número
+            Long.parseLong(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            // Si ocurre una excepción, la cadena no es un número
+            return false;
+        }
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+
+    public static boolean esNoNuloNoVacio(String cadena) {
+        return cadena != null && !cadena.isEmpty();
+    }
+    
+    public static boolean tieneFormatoFecha(String input) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+        sdf.setLenient(false);
+        try {
+            Date fecha = sdf.parse(input);
+            return true;
+        } catch (ParseException e) {
+
+            return false;
+        }
+    }
+
+    public static boolean tieneFormatoReloj(String input) {
+        Pattern pattern = Pattern.compile("([01]?[0-9]|2[0-3]):[0-5][0-9]");
+        Matcher matcher = pattern.matcher(input);
+
+        return matcher.matches();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -78,5 +369,24 @@ public class ActualizarVueloView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton actualizarButton;
+    private javax.swing.JButton buscarVueloButton;
+    private javax.swing.JTextField destinoTextField;
+    private javax.swing.JTextField fechaTextField;
+    private javax.swing.JTextField horaTextField;
+    private javax.swing.JTextField idVueloTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<String> miembroComboBox;
+    private javax.swing.JTextField numeroVueloTextField;
+    private javax.swing.JTextField origenTextField;
+    private javax.swing.JComboBox<String> pilotoComboBox;
     // End of variables declaration//GEN-END:variables
 }

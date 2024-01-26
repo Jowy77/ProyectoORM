@@ -26,7 +26,21 @@ public class PilotoDAO {
             return query.list();
         }
     }
-    
+
+    public List<Piloto> obtenerPilotosOrdenadosPorHorasDeVueloDescendente() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizamos HQL para obtener los pilotos ordenados por horas de vuelo descendente
+            String hql = "FROM Piloto p ORDER BY p.horasDeVuelo DESC";
+            Query<Piloto> query = session.createQuery(hql, Piloto.class);
+
+            // Ejecutamos la consulta y devolvemos la lista de pilotos
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void actualizarPiloto(Piloto piloto) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -56,7 +70,7 @@ public class PilotoDAO {
             return null;
         }
     }
-    
+
     public Piloto obtenerPilotoPorId(Long idPiloto) {
         try (Session session = sessionFactory.openSession()) {
             // Utilizar HQL para obtener el Piloto por su ID

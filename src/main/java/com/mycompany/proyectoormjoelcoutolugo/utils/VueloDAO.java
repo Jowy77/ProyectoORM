@@ -28,6 +28,42 @@ public class VueloDAO {
         }
     }
     
+    public void actualizarVuelo(Vuelo vuelo) {
+        Transaction transaction = null;
+
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            // Actualizamos el vuelo
+            session.merge(vuelo);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+    
+    public List<Object[]> obtenerInformacionVuelosConDetalles() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizamos HQL para obtener la información de los vuelos con detalles
+            String hql = "SELECT v.numeroDeVuelo, v.fechaVuelo, v.origen, v.destino, a.codigo AS codigoAvion, p.nombre AS nombrePiloto, m.nombre AS nombreMiembro " +
+                         "FROM Vuelo v " +
+                         "INNER JOIN Avion a ON v.avion.id_avion = a.id_avion " +
+                         "INNER JOIN Piloto p ON v.piloto.id_piloto = p.id_piloto " +
+                         "LEFT JOIN Miembro m ON v.miembro.id_miembro = m.id_miembro";
+            Query<Object[]> query = session.createQuery(hql, Object[].class);
+
+            // Ejecutamos la consulta y devolvemos la lista de resultados
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public Vuelo obtenerVueloPorId(Long idVuelo) {
         try (Session session = sessionFactory.openSession()) {
             // Utilizar HQL para obtener el Vuelo por su ID

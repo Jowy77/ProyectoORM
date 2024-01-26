@@ -56,6 +56,7 @@ public class PrimaryView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -65,6 +66,8 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -87,6 +90,7 @@ public class PrimaryView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tablaConsultas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 153, 0), new java.awt.Color(153, 102, 255), new java.awt.Color(51, 51, 0), new java.awt.Color(255, 51, 255)));
         tablaConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -107,6 +111,9 @@ public class PrimaryView extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Apps-preferences-system-time-icon (1).png"))); // NOI18N
+
+        jMenuBar1.setBackground(new java.awt.Color(153, 153, 255));
         jMenuBar1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jMenuBar1AncestorAdded(evt);
@@ -178,6 +185,22 @@ public class PrimaryView extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem19);
+
+        jMenuItem20.setText("Pilotos ordenados por horas de vuelo");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem20);
+
+        jMenuItem21.setText("Consultar vuelos detallado");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem21);
 
         jMenu1.add(jMenu2);
 
@@ -300,20 +323,27 @@ public class PrimaryView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(26, 26, 26))
+                .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(307, 307, 307)
+                        .addComponent(jLabel2)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(26, 26, 26))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -499,6 +529,53 @@ public class PrimaryView extends javax.swing.JFrame {
        
         tablaConsultas.setModel(tableModel);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        //PILOTOS ORDENADOS POR HORAS DE VUELO
+        List<Piloto> listaPilotos = pilotoDao.obtenerPilotosOrdenadosPorHorasDeVueloDescendente();
+        //"ID", "Código", "Nombre", "Horas de Vuelo"
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Nombre_Piloto");
+        tableModel.addColumn("Horas_De_Vuelo");
+        
+        listaPilotos.forEach(e -> {
+            tableModel.addRow(new Object[]{e.getId_piloto(), e.getCodigo(), e.getNombre(), e.getHorasDeVuelo()});
+        });
+        
+        tablaConsultas.setModel(tableModel);
+        
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+   /* SELECT v.numeroDeVuelo, v.fechaVuelo, v.origen, v.destino, a.codigo AS codigoAvion, p.nombre AS nombrePiloto, m.nombre AS nombreMiembro " +
+                         "FROM Vuelo v " +
+                         "INNER JOIN Avion a ON v.avion.id_avion = a.id_avion " +
+                         "INNER JOIN Piloto p ON v.piloto.id_piloto = p.id_piloto " +
+                         "LEFT JOIN Miembro m ON v.miembro.id_miembro = m.id_miembro";*/
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        //CONSULTAR VUELOS DETATALLADO
+        
+         List<Object[]> listaVuelos = vueloDao.obtenerInformacionVuelosConDetalles();
+        //"ID", "Número de Vuelo", "Origen", "Destino", "Hora de Salida", "Fecha de Vuelo"
+        
+        
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Código_Vuelo");
+        tableModel.addColumn("Fecha de vuelo");
+        tableModel.addColumn("Origen");
+        tableModel.addColumn("Destino");
+        tableModel.addColumn("Codigo del avion");
+        tableModel.addColumn("Nombre del piloto");
+        tableModel.addColumn("Nombre del miembro");
+        
+        for (Object[] datos : listaVuelos){
+            tableModel.addRow(datos);
+        }
+        
+        tablaConsultas.setModel(tableModel);
+        
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
     
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);
@@ -541,6 +618,7 @@ public class PrimaryView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
@@ -560,6 +638,8 @@ public class PrimaryView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
