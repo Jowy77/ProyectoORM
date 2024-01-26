@@ -27,6 +27,37 @@ public class VueloDAO {
             return query.list();
         }
     }
+    
+    public Vuelo obtenerVueloPorId(Long idVuelo) {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener el Vuelo por su ID
+            String hql = "FROM Vuelo WHERE id_vuelo = :id";
+            return session.createQuery(hql, Vuelo.class)
+                    .setParameter("id", idVuelo)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+     public void insertarVuelo(Vuelo vuelo) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            // Guardar el vuelo en la base de datos
+            session.persist(vuelo);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            mostrarMensaje("NO SE HA PODIDO INSERTAR EL VUELO");
+            e.printStackTrace();
+        }
+    }
 
     public void eliminarVueloPorId(Long idVuelo) {
         try (Session session = sessionFactory.openSession()) {

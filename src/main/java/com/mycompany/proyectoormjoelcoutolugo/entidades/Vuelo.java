@@ -17,7 +17,7 @@ public class Vuelo {
 
     private String numeroDeVuelo;
 
-    private Date fechaVuelo;
+    private String fechaVuelo;
 
     private String horaSalida;
 
@@ -36,7 +36,7 @@ public class Vuelo {
     public Vuelo() {
     }
 
-    public Vuelo(String origen, String destino, String numeroDeVuelo, Date fecha, String horaSalida, Avion avion) {
+    public Vuelo(String origen, String destino, String numeroDeVuelo, String fecha, String horaSalida, Avion avion) {
         this.origen = origen;
         this.destino = destino;
         this.numeroDeVuelo = numeroDeVuelo;
@@ -44,6 +44,19 @@ public class Vuelo {
         this.horaSalida = horaSalida;
         this.avion = avion;
     }
+
+    public Vuelo(Long id_vuelo, String origen, String destino, String numeroDeVuelo, String fechaVuelo, String horaSalida, Piloto piloto, Miembro miembro, Avion avion) {
+        this.id_vuelo = id_vuelo;
+        this.origen = origen;
+        this.destino = destino;
+        this.numeroDeVuelo = numeroDeVuelo;
+        this.fechaVuelo = fechaVuelo;
+        this.horaSalida = horaSalida;
+        this.piloto = piloto;
+        this.miembro = miembro;
+        this.avion = avion;
+    }
+    
 
     public Long getId() {
         return id_vuelo;
@@ -61,7 +74,7 @@ public class Vuelo {
         return numeroDeVuelo;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fechaVuelo;
     }
 
@@ -89,7 +102,7 @@ public class Vuelo {
         this.numeroDeVuelo = numeroDeVuelo;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fechaVuelo = fecha;
     }
 
@@ -105,7 +118,7 @@ public class Vuelo {
         this.avion = avion;
     }
 
-    public Date getFechaVuelo() {
+    public String getFechaVuelo() {
         return fechaVuelo;
     }
 
@@ -117,7 +130,7 @@ public class Vuelo {
         return miembro;
     }
 
-    public void setFechaVuelo(Date fechaVuelo) {
+    public void setFechaVuelo(String fechaVuelo) {
         this.fechaVuelo = fechaVuelo;
     }
 

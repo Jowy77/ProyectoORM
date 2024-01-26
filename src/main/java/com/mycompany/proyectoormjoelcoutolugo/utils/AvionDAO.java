@@ -29,6 +29,52 @@ public class AvionDAO {
         }
     }
     
+    public Long obtenerNumeroAvionesDisponibles() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizamos HQL para contar los aviones disponibles
+            String hql = "SELECT COUNT(*) FROM Avion a";
+            Query<Long> query = session.createQuery(hql, Long.class);
+
+            // Ejecutamos la consulta y devolvemos el resultado
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void actualizarAvion(Avion avion) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            // Verificar si el avión ya existe en la base de datos
+            if (avion.getId_avion() != null) {
+                // Actualizar el avión
+                session.merge(avion);
+                transaction.commit();
+                System.out.println("Avión actualizado con éxito.");
+            } else {
+                System.out.println("El avión no tiene un ID asignado. Inserta el avión primero.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Avion obtenerAvionPorId(Long idAvion) {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener el Avión por su ID
+            String hql = "FROM Avion WHERE id_avion = :id";
+            return session.createQuery(hql, Avion.class)
+                    .setParameter("id", idAvion)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMensaje("AVION NO ENCONTRADO");
+            return null;
+        }
+    }
+
     public List<Long> obtenerIdsAviones() {
         try (Session session = sessionFactory.openSession()) {
             // Utilizar HQL para obtener los IDs de los aviones

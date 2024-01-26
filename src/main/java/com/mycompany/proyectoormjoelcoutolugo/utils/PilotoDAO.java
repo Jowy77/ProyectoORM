@@ -1,6 +1,5 @@
 package com.mycompany.proyectoormjoelcoutolugo.utils;
 
-import com.mycompany.proyectoormjoelcoutolugo.entidades.Miembro;
 import com.mycompany.proyectoormjoelcoutolugo.entidades.Piloto;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +27,25 @@ public class PilotoDAO {
         }
     }
     
+    public void actualizarPiloto(Piloto piloto) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            // Verificar si el piloto ya existe en la base de datos
+            if (piloto.getId_piloto() != null) {
+                // Actualizar el piloto
+                session.merge(piloto);
+
+                transaction.commit();
+                System.out.println("Piloto actualizado con éxito");
+            } else {
+                System.out.println("El piloto no tiene un ID asignado. Inserta el piloto primero.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Long> obtenerIdsPilotos() {
         try (Session session = sessionFactory.openSession()) {
             // Utilizar HQL para obtener los IDs de los pilotos
@@ -39,6 +57,20 @@ public class PilotoDAO {
         }
     }
     
+    public Piloto obtenerPilotoPorId(Long idPiloto) {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener el Piloto por su ID
+            String hql = "FROM Piloto WHERE id_piloto = :id";
+            return session.createQuery(hql, Piloto.class)
+                    .setParameter("id", idPiloto)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMensaje("PILOTO NO ENCONTRADO");
+            return null;
+        }
+    }
+
     public void eliminarPilotoPorId(Long idPiloto) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
@@ -65,7 +97,7 @@ public class PilotoDAO {
             }
         }
     }
-    
+
     public void insertarPiloto(Piloto piloto) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;

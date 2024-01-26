@@ -17,6 +17,10 @@ import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarAvio
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarMiembroView;
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarPilotoView;
 import com.mycompany.proyectoormjoelcoutolugo.vistas.vistasInsertar.InsertarVueloView;
+import com.mycompany.proyectoormjoelcoutolugo.vistasActualizar.ActualizarAvionView;
+import com.mycompany.proyectoormjoelcoutolugo.vistasActualizar.ActualizarMiembroView;
+import com.mycompany.proyectoormjoelcoutolugo.vistasActualizar.ActualizarPilotoView;
+import com.mycompany.proyectoormjoelcoutolugo.vistasActualizar.ActualizarVueloView;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -48,6 +52,7 @@ public class PrimaryView extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -57,6 +62,9 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -74,6 +82,8 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenuItem16 = new javax.swing.JMenuItem();
 
         jMenu6.setText("jMenu6");
+
+        jMenuItem17.setText("jMenuItem17");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,6 +160,26 @@ public class PrimaryView extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
+
+        jMenu2.setText("Consultas Extras");
+
+        jMenuItem18.setText("Miembros sin vuelo asignado");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem18);
+
+        jMenuItem19.setText("Numero de aviones en BBDD");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem19);
+
+        jMenu1.add(jMenu2);
 
         jMenuBar1.add(jMenu1);
 
@@ -228,15 +258,35 @@ public class PrimaryView extends javax.swing.JFrame {
         jMenu7.setText("Actualizar");
 
         jMenuItem13.setText("Actualizar avion");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem13);
 
         jMenuItem14.setText("Actualizar miembro de trippulacion");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem14);
 
         jMenuItem15.setText("Actualizar piloto");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem15);
 
         jMenuItem16.setText("Actualizar vuelo");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem16);
 
         jMenuBar1.add(jMenu7);
@@ -247,23 +297,23 @@ public class PrimaryView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(22, 22, 22))
+                .addGap(26, 26, 26))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -286,7 +336,7 @@ public class PrimaryView extends javax.swing.JFrame {
         tableModel.addColumn("Fecha_vuelo");
         
         listaVuelos.forEach(e -> {
-            tableModel.addRow(new Object[]{e.getId_vuelo(), e.getNumeroDeVuelo(), e.getOrigen(), e.getDestino(), e.getHoraSalida(), e.getHoraSalida(), e.getFechaVuelo()});
+            tableModel.addRow(new Object[]{e.getId_vuelo(), e.getNumeroDeVuelo(), e.getOrigen(), e.getDestino(), e.getHoraSalida(), e.getFechaVuelo()});
         });
         
         tablaConsultas.setModel(tableModel);
@@ -404,6 +454,51 @@ public class PrimaryView extends javax.swing.JFrame {
         InsertarAvionView insertarAvionView = new InsertarAvionView();
         insertarAvionView.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        ActualizarAvionView actualizarAvionView = new ActualizarAvionView();
+        actualizarAvionView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        ActualizarMiembroView actualizarMiembroView = new ActualizarMiembroView();
+        actualizarMiembroView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        ActualizarPilotoView actualizarPilotoView = new ActualizarPilotoView();
+        actualizarPilotoView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        ActualizarVueloView actualizarVueloView = new ActualizarVueloView();
+        actualizarVueloView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        //CONSULTA MIEMBROS SIN VUELO ASIGNADO
+        
+        List<Miembro> listaMiembrosSinVuelo = miembroDao.obtenerMiembrosSinVueloAsignado();
+       
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Nombre_Miembro");
+        
+        listaMiembrosSinVuelo.forEach(e -> {
+            tableModel.addRow(new Object[]{e.getId_miembro(), e.getCodigo(), e.getNombre()});
+        });
+        
+        tablaConsultas.setModel(tableModel);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("NUMERO DE AVIONES");
+        tableModel.addRow(new Object[]{avionDao.obtenerNumeroAvionesDisponibles()});
+       
+        tablaConsultas.setModel(tableModel);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
     
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje);
@@ -447,6 +542,7 @@ public class PrimaryView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -460,6 +556,9 @@ public class PrimaryView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

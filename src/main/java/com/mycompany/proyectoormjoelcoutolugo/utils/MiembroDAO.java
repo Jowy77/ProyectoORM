@@ -27,6 +27,54 @@ public class MiembroDAO {
         }
     }
     
+    public List<Miembro> obtenerMiembrosSinVueloAsignado() {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizamos HQL para la consulta
+            String hql = "FROM Miembro m WHERE m.id_miembro NOT IN (SELECT DISTINCT v.miembro.id_miembro FROM Vuelo v WHERE v.miembro.id_miembro IS NOT NULL)";
+            Query<Miembro> query = session.createQuery(hql, Miembro.class);
+
+            // Ejecutamos la consulta y devolvemos los resultados
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void actualizarMiembro(Miembro miembro) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            // Verificar si el miembro ya existe en la base de datos
+            if (miembro.getId_miembro() != null) {
+                // Actualizar el miembro
+
+                session.merge(miembro);
+
+                transaction.commit();
+                System.out.println("Miembro actualizado con éxito");
+            } else {
+                System.out.println("El miembro no tiene un ID asignado. Inserta el miembro primero.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Miembro obtenerMiembroPorId(Long idMiembro) {
+        try (Session session = sessionFactory.openSession()) {
+            // Utilizar HQL para obtener el Miembro por su ID
+            String hql = "FROM Miembro WHERE id_miembro = :id";
+            return session.createQuery(hql, Miembro.class)
+                    .setParameter("id", idMiembro)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMensaje("MIEMBRO DE TRIPULACION NO ENCONTRADO");
+            return null;
+        }
+    }
+
     // Método para obtener una lista de IDs de miembros usando HQL
     public List<Long> obtenerIdsMiembros() {
         try (Session session = sessionFactory.openSession()) {
@@ -65,7 +113,7 @@ public class MiembroDAO {
             }
         }
     }
-    
+
     public void insertarMiembro(Miembro miembro) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
